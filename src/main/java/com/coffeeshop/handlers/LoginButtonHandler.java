@@ -57,19 +57,19 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
                     ThemeUI.applyTabPaneTheme(tabPane);
 
                     OrdersView ordersView = new OrdersView();
-                    Tab ordersTab = new Tab("Orders", ordersView.getOrdersGUI());
+                    Tab ordersTab = new Tab("Orders Tab", ordersView.getOrdersGUI());
                     ordersTab.setClosable(false);
 
                     InventoryView inventoryView = new InventoryView();
-                    Tab inventoryTab = new Tab("Inventory", inventoryView.getInventoryGUI());
+                    Tab inventoryTab = new Tab("Inventory Management Tab", inventoryView.getInventoryGUI());
                     inventoryTab.setClosable(false);
 
                     UsersView usersView = new UsersView();
-                    Tab usersTab = new Tab("Users", usersView.getUsersGUI());
+                    Tab usersTab = new Tab("Users Management Tab", usersView.getUsersGUI());
                     usersTab.setClosable(false);
 
                     ReportsView reportsView = new ReportsView();
-                    Tab reportsTab = new Tab("Reports", reportsView.getReportsGUI());
+                    Tab reportsTab = new Tab("Reports Tab", reportsView.getReportsGUI());
                     reportsTab.setClosable(false);
 
                     tabPane.getTabs().addAll(ordersTab, inventoryTab, usersTab, reportsTab);
