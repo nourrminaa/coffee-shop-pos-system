@@ -2,6 +2,7 @@ package com.coffeeshop.ui;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 
@@ -48,7 +49,50 @@ public class ThemeUI {
                 "-fx-border-radius: 0;";
     }
 
+    public static String tabStyle() {
+        return "-fx-background-color: " + BLACK_COLOR + ";" +
+                "-fx-padding: 10 20;" +
+                "-fx-background-radius: 0;" +
+                "-fx-border-radius: 0;" +
+                "-fx-cursor: hand;";
+    }
+
+    public static String tabLabelStyle() {
+        return "-fx-text-fill: " + BG_COLOR + ";" +
+                "-fx-font-family: 'Montserrat Bold';" +
+                "-fx-font-size: 14px;" +
+                "-fx-font-weight: bold;";
+    }
+
     // components factories
+
+
+    public static void applyTabPaneTheme(TabPane tabPane) {
+        // basically a Tab is not a Node by default like the rest of the ui components
+        // and in order to manipulate a ui using css it NEEDS to be a Node
+        // the visible tab button we click on is NOT the Tab:
+        // it is a StackPane created later by the TabPaneSkin -> converts the Tab into a Node
+        // so JavaFX internally:
+        // for each Tab:
+        // create a StackPane with styleclass "tab"
+        // inside it create a Label with styleclass "tab-label" (we can use the .lookupAll method to gather all teh classes related)
+        // so, in order to change the css of a Tab we need to wait until runtime, after UI is shown
+        tabPane.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            // adding an event listener obs that observes changes in the skin property: "when the skin changes (from null to real skin), run the code"
+            if (newSkin != null) {
+                tabPane.lookupAll(".tab-header-background").forEach(node ->
+                        node.setStyle("-fx-background-color: " + ThemeUI.BG_COLOR + ";")
+                );
+                tabPane.lookupAll(".tab").forEach(tabNode ->
+                        tabNode.setStyle(ThemeUI.tabStyle())
+                );
+                tabPane.lookupAll(".tab-label").forEach(label ->
+                        label.setStyle(ThemeUI.tabLabelStyle())
+                );
+            }
+        });
+    }
+
     public static Button createButton(String text) {
         Button btn = new Button(text);
         btn.setFont(FONT_REGULAR);

@@ -1,11 +1,10 @@
 package com.coffeeshop;
 
 import com.coffeeshop.db.DBConnectMySQL;
+import com.coffeeshop.handlers.LoginButtonHandler;
 import com.coffeeshop.ui.LoginView;
-import com.coffeeshop.utils.TestPDFThread;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.sql.Statement;
@@ -14,30 +13,20 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        try {
-            DBConnectMySQL db = new DBConnectMySQL();
-            Statement stmt = db.getStatement();
 
-//            TestPDFThread tester:
-//            System.out.println("[MAIN] Starting PDF thread...");
-//            TestPDFThread t = new TestPDFThread("test_receipt1.pdf");
-//            t.start();
-//            System.out.println("[MAIN] Thread started!");
+        DBConnectMySQL db = new DBConnectMySQL();
+        Statement st = db.getStatement();
 
-            LoginView loginView = new LoginView();
-//
-            HBox root = loginView.getLoginGUI();
-//
-            Scene scene = new Scene(root, 4000, 4000);
+        LoginView loginView = new LoginView(st, primaryStage);
+        Scene loginScene = new Scene(loginView.getLoginGUI(), 1400, 1400);
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("CoffeeShop POS");
-//            primaryStage.setFullScreen(true); // to launch the stage in full screen
-            primaryStage.show();
+        // set from here to take the stage so we can modify later
+        loginView.loginBtn.setOnAction(new LoginButtonHandler(st, loginView.usernameTextField, loginView.passwordField, primaryStage));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        primaryStage.setScene(loginScene);
+        primaryStage.setTitle("CoffeeShop POS - Login");
+        primaryStage.setFullScreen(true);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
