@@ -1,5 +1,10 @@
 package com.coffeeshop.handlers;
 
+import com.coffeeshop.factory.DefaultUserFactory;
+import com.coffeeshop.factory.IUserFactory;
+import com.coffeeshop.models.Admin;
+import com.coffeeshop.models.Cashier;
+import com.coffeeshop.models.User;
 import com.coffeeshop.ui.*;
 
 import javafx.event.ActionEvent;
@@ -12,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
-import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -36,8 +40,9 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
             String username = usernameTextField.getText();
             String password = passwordField.getText();
 
+            // blank means empty or only spaces
             if (username.isBlank() || password.isBlank()) {
-                System.out.println("Empty fields");
+                System.err.println("Username and password cannot be blank.");
                 return;
             }
 
@@ -48,49 +53,59 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
             // by replacing ' with '': SELECT * FROM users WHERE username='  '' OR 1=1 --  '
             String safeUsername = username.replace("'", "''");
 
-            ResultSet rs = st.executeQuery("SELECT role FROM users " +"WHERE username='" + safeUsername + "' " +"AND password_hash='" + hashedPassword + "'");
+            ResultSet rs = st.executeQuery("SELECT id, username, password_hash, display_name, role FROM users WHERE username='" + safeUsername + "' AND password_hash='" + hashedPassword + "'");
 
-            if (rs.next()) {
-                String role = rs.getString("role");
+            if (!rs.next()) {
+                System.err.println("Invalid username or password");
+                return;
+            }
 
-                if (role.equalsIgnoreCase("ADMIN")) {
-                    TabPane tabPane = new TabPane();
-                    ThemeUI.applyTabPaneTheme(tabPane);
+            IUserFactory userFactory = new DefaultUserFactory();
 
-                    OrdersView ordersView = new OrdersView();
-                    Tab ordersTab = new Tab("Orders Tab", ordersView.getOrdersGUI());
-                    ordersTab.setClosable(false);
+            User loggedUser = userFactory.create(
+                    rs.getInt("id"),
+                    rs.getString("username"),
+                    rs.getString("password_hash"),
+                    rs.getString("display_name"),
+                    rs.getString("role")
+            );
 
-                    InventoryView inventoryView = new InventoryView();
-                    Tab inventoryTab = new Tab("Inventory Management Tab", inventoryView.getInventoryGUI());
-                    inventoryTab.setClosable(false);
+            if (loggedUser instanceof Admin) {
+                TabPane tabPane = new TabPane();
+                ThemeUI.applyTabPaneTheme(tabPane); // function that styles the tabPane
 
-                    UsersView usersView = new UsersView(st);
-                    Tab usersTab = new Tab("Users Management Tab", usersView.getUsersGUI());
-                    usersTab.setClosable(false);
+                Tab ordersTab = new Tab("Orders Tab", new OrdersView().getOrdersGUI());
+                ordersTab.setClosable(false); // to not close by accident the tab
 
-                    ReportsView reportsView = new ReportsView(st);
-                    Tab reportsTab = new Tab("Reports Tab", reportsView.getReportsGUI());
-                    reportsTab.setClosable(false);
+                Tab inventoryTab = new Tab("Inventory Management Tab", new InventoryView().getInventoryGUI());
+                inventoryTab.setClosable(false);
 
-                    tabPane.getTabs().addAll(ordersTab, inventoryTab, usersTab, reportsTab);
+                Tab usersTab = new Tab("Users Management Tab", new UsersView(st).getUsersGUI());
+                usersTab.setClosable(false);
 
-                    Scene dashboard = new Scene(tabPane, 1400, 1400);
-                    stage.setScene(dashboard);
-                    stage.setTitle("CoffeeShop POS - Admin");
-                    stage.setFullScreen(true);
+                Tab reportsTab = new Tab("Reports Tab", new ReportsView(st).getReportsGUI());
+                reportsTab.setClosable(false);
 
-                } else {
-                    OrdersView ordersView = new OrdersView();
-                    Scene ordersScene = new Scene(ordersView.getOrdersGUI(), 1400, 1400);
+                tabPane.getTabs().addAll(ordersTab, inventoryTab, usersTab, reportsTab);
 
-                    stage.setScene(ordersScene);
-                    stage.setTitle("CoffeeShop POS - Cashier");
-                    stage.setFullScreen(true);
-                }
+                Scene scene = new Scene(tabPane, 1400, 1400);
+                stage.setScene(scene);
+                stage.setTitle("CoffeeShop POS - Admin");
+                stage.setFullScreen(true);
+
+            } else if (loggedUser instanceof Cashier) {
+                // we did not create a Tab/TabPane here because the cashier only has 1 pane (orders pane)
+                Scene scene = new Scene(new OrdersView().getOrdersGUI(), 1400, 1400);
+
+                stage.setScene(scene);
+                stage.setTitle("CoffeeShop POS - Cashier");
+                stage.setFullScreen(true);
+            } else {
+                System.err.println("Unknown user role.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("Error during login process.");
         }
     }
 }
