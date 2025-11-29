@@ -6,13 +6,12 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 public class ThemeUI {
 
     // colors
-    public static final String BG_COLOR = "#DFD8C9";
+    public static final String BG_COLOR = "#F5F2EB";
     public static final String BLACK_COLOR = "#171715";
     public static final String TEXT_COLOR = "#111111";
     public static final String GOLD_COLOR = "#D6B37A";
