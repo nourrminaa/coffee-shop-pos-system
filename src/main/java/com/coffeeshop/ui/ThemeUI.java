@@ -30,7 +30,7 @@ public class ThemeUI {
                 "-fx-padding: 12 28;" +
                 "-fx-background-insets: 0;" +
                 "-fx-font-weight: bold;" +
-                "-fx-font-family: 'Montserrat Bold';" +
+                "-fx-font-family: 'Montserrat';"+
                 "-fx-font-size: 18px;" +
                 "-fx-cursor: hand;";
     }
@@ -41,8 +41,10 @@ public class ThemeUI {
                 "-fx-background-radius: 0;" +
                 "-fx-border-radius: 0;" +
                 "-fx-text-fill: " + TEXT_COLOR + ";" +
+                "-fx-font-family: 'Montserrat';" +
                 "-fx-padding: 10 14;";
     }
+
 
     public static String cardStyle() {
         return "-fx-background-color: " + BG_COLOR + ";" +
@@ -116,13 +118,20 @@ public class ThemeUI {
         PasswordField pf = new PasswordField();
         pf.setPromptText(placeholder);
         pf.setFont(FONT_REGULAR);
-        pf.setStyle(textFieldStyle());
+        pf.setStyle(textFieldStyle() + "-fx-font-family: 'Montserrat';");
         pf.setPrefHeight(45);
         return pf;
     }
 
     public static Font getFontRegular() { return FONT_REGULAR; }
     public static Font getFontBold() { return FONT_BOLD; }
+
+    public static String tableStyle() {
+        return "-fx-background-color: " + BG_COLOR + ";" +
+                "-fx-control-inner-background: " + BG_COLOR + ";" +
+                "-fx-table-cell-border-color: " + BLACK_COLOR + ";" +
+                "-fx-border-color: " + BLACK_COLOR + ";";
+    }
 
     public static String sha256(String t) {
         try {
