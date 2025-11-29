@@ -6,6 +6,9 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+
 public class ThemeUI {
 
     // colors
@@ -121,4 +124,14 @@ public class ThemeUI {
 
     public static Font getFontRegular() { return FONT_REGULAR; }
     public static Font getFontBold() { return FONT_BOLD; }
+
+    public static String sha256(String t) {
+        try {
+            MessageDigest d = MessageDigest.getInstance("SHA-256");
+            return java.util.HexFormat.of().formatHex(d.digest(t.getBytes()));
+        } catch (Exception e) {
+            System.out.println("Error in generating hash.");
+            return "";
+        }
+    }
 }

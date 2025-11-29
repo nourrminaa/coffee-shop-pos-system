@@ -41,7 +41,8 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
                 return;
             }
 
-            String hashedPassword = sha256(password);
+            String hashedPassword = ThemeUI.sha256(password);
+
             // to be safe from sql injections:
             // if a user tries to enter: SELECT * FROM users WHERE username=''  OR 1=1 --' (1=1 always true + comments the rest)
             // by replacing ' with '': SELECT * FROM users WHERE username='  '' OR 1=1 --  '
@@ -64,11 +65,11 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
                     Tab inventoryTab = new Tab("Inventory Management Tab", inventoryView.getInventoryGUI());
                     inventoryTab.setClosable(false);
 
-                    UsersView usersView = new UsersView();
+                    UsersView usersView = new UsersView(st);
                     Tab usersTab = new Tab("Users Management Tab", usersView.getUsersGUI());
                     usersTab.setClosable(false);
 
-                    ReportsView reportsView = new ReportsView();
+                    ReportsView reportsView = new ReportsView(st);
                     Tab reportsTab = new Tab("Reports Tab", reportsView.getReportsGUI());
                     reportsTab.setClosable(false);
 
@@ -90,15 +91,6 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private String sha256(String t) {
-        try {
-            MessageDigest d = MessageDigest.getInstance("SHA-256");
-            return java.util.HexFormat.of().formatHex(d.digest(t.getBytes()));
-        } catch (Exception e) {
-            return "";
         }
     }
 }
