@@ -74,18 +74,17 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
                 TabPane tabPane = new TabPane();
                 ThemeUI.applyTabPaneTheme(tabPane); // function that styles the tabPane
 
-                Tab ordersTab = new Tab("Orders Tab", new OrdersView().getOrdersGUI());
+                Tab ordersTab = new Tab("Orders Tab", new OrdersView(st, stage).getOrdersGUI());
                 ordersTab.setClosable(false); // to not close by accident the tab
 
-                Tab inventoryTab = new Tab("Inventory Management Tab", new InventoryView().getInventoryGUI());
+                Tab inventoryTab = new Tab("Inventory Management Tab", new InventoryView(st, stage).getInventoryGUI());
                 inventoryTab.setClosable(false);
 
-                Tab usersTab = new Tab("Users Management Tab", new UsersView(st).getUsersGUI());
+                Tab usersTab = new Tab("Users Management Tab", new UsersView(st, stage).getUsersGUI());
                 usersTab.setClosable(false);
 
-                Tab reportsTab = new Tab("Reports Tab", new ReportsView(st).getReportsGUI());
+                Tab reportsTab = new Tab("Reports Tab", new ReportsView(st, stage).getReportsGUI());
                 reportsTab.setClosable(false);
-
                 tabPane.getTabs().addAll(ordersTab, inventoryTab, usersTab, reportsTab);
 
                 Scene scene = new Scene(tabPane, 1400, 1400);
@@ -95,7 +94,7 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
 
             } else if (loggedUser instanceof Cashier) {
                 // we did not create a Tab/TabPane here because the cashier only has 1 pane (orders pane)
-                Scene scene = new Scene(new OrdersView().getOrdersGUI(), 1400, 1400);
+                Scene scene = new Scene(new OrdersView(st, stage).getOrdersGUI(), 1400, 1400);
 
                 stage.setScene(scene);
                 stage.setTitle("CoffeeShop POS - Cashier");

@@ -1,5 +1,6 @@
 package com.coffeeshop.ui;
 
+import com.coffeeshop.handlers.LogoutButtonHandler;
 import com.coffeeshop.utils.ReportsPDFThread;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ReportsView {
 
     private Statement st;
+    private Stage stage;
     private ComboBox<String> usersComboBox;
     private ComboBox<String> periodComboBox;
     private DatePicker fromDatePicker;
@@ -28,8 +31,9 @@ public class ReportsView {
         this.st = null;
     }
 
-    public ReportsView(Statement st) {
+    public ReportsView(Statement st, Stage stage) {
         this.st = st;
+        this.stage = stage;
     }
 
     public BorderPane getReportsGUI() {
@@ -47,7 +51,15 @@ public class ReportsView {
         headerTitle.setFill(Color.web(ThemeUI.TEXT_COLOR));
         headerTitle.setFont(ThemeUI.getFontBold());
 
-        headerPane.getChildren().add(headerTitle);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button logoutBtn = ThemeUI.createButton("Logout");
+        logoutBtn.setPrefHeight(40);
+        logoutBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
+        logoutBtn.setOnAction(new LogoutButtonHandler(st, stage));
+
+        headerPane.getChildren().addAll(headerTitle, spacer, logoutBtn);
         root.setTop(headerPane);
 
         // Main content area

@@ -1,5 +1,6 @@
 package com.coffeeshop.ui;
 
+import com.coffeeshop.handlers.LogoutButtonHandler;
 import com.coffeeshop.handlers.UsersHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,6 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
 import java.sql.Statement;
 
 public class UsersView {
@@ -18,9 +21,11 @@ public class UsersView {
     public PasswordField passwordField;
     public TextField displayNameField;
     public ComboBox<String> roleComboBox;
+    private Stage stage;
 
-    public UsersView(Statement st) {
+    public UsersView(Statement st, Stage stage) {
         this.st = st;
+        this.stage = stage;
     }
 
     public BorderPane getUsersGUI() {
@@ -37,7 +42,15 @@ public class UsersView {
         headerTitle.setFill(Color.web(ThemeUI.TEXT_COLOR));
         headerTitle.setFont(ThemeUI.getFontBold());
 
-        headerPane.getChildren().add(headerTitle);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button logoutBtn = ThemeUI.createButton("Logout");
+        logoutBtn.setPrefHeight(40);
+        logoutBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
+        logoutBtn.setOnAction(new LogoutButtonHandler(st, stage));
+
+        headerPane.getChildren().addAll(headerTitle, spacer, logoutBtn);
         root.setTop(headerPane);
 
         HBox mainContent = new HBox(20);
@@ -135,8 +148,8 @@ public class UsersView {
         roleComboBox.setPrefHeight(38);
         roleBox.getChildren().addAll(roleLabel, roleComboBox);
 
-        Region spacer = new Region();
-        VBox.setVgrow(spacer, Priority.ALWAYS);
+        Region spacer1 = new Region();
+        VBox.setVgrow(spacer1, Priority.ALWAYS);
 
         Button addUserBtn = ThemeUI.createButton("Add User");
         addUserBtn.setMaxWidth(1400);
@@ -150,7 +163,7 @@ public class UsersView {
         deleteUserBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
         deleteUserBtn.setOnAction(handler);
 
-        rightPane.getChildren().addAll(formTitle,usernameBox,passwordBox,displayNameBox, roleBox, spacer, addUserBtn, deleteUserBtn);
+        rightPane.getChildren().addAll(formTitle,usernameBox,passwordBox,displayNameBox, roleBox, spacer1, addUserBtn, deleteUserBtn);
 
         leftPane.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.75));
         rightPane.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.25));
