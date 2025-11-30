@@ -1,5 +1,6 @@
 package com.coffeeshop.ui;
 
+import com.coffeeshop.handlers.LogoutButtonHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
@@ -19,7 +20,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
+import java.sql.Statement;
+
 public class OrdersView {
+    private Statement st;
+    private Stage stage;
+
+    public OrdersView(Statement st, Stage stage) {
+        this.st = st;
+        this.stage = stage;
+    }
 
     // categories (DB-friendly: later load from DB instead of this array)
     private final String[] categories = {
@@ -61,13 +71,21 @@ public class OrdersView {
         TextField searchField = ThemeUI.createTextField("Search items...");
         searchField.setStyle(ThemeUI.textFieldStyle() + "-fx-font-size: 14px;"); // since it is a String we can add to it
         searchField.setPrefHeight(40);
-        searchField.setPrefWidth(1100);
+        searchField.setPrefWidth(700);
 
         Button searchBtn = ThemeUI.createButton("Search");
         searchBtn.setPrefHeight(40);
         searchBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
 
-        searchPane.getChildren().addAll(searchField, searchBtn);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button logoutBtn = ThemeUI.createButton("Logout");
+        logoutBtn.setPrefHeight(40);
+        logoutBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
+        logoutBtn.setOnAction(new LogoutButtonHandler(st, stage));
+
+        searchPane.getChildren().addAll(searchField, searchBtn, spacer, logoutBtn);
         root.setTop(searchPane); // set to the top in the border pane
 
         // 2. main pane (left pane + right pane)
@@ -276,10 +294,10 @@ public class OrdersView {
         priceText.setFill(Color.web(ThemeUI.TEXT_COLOR));
         priceText.setFont(ThemeUI.getFontRegular());
 
-        Button addBtn = ThemeUI.createButton("+");
+        Button addBtn = ThemeUI.createIconButton("plus.png");
         addBtn.setPrefWidth(32);
         addBtn.setPrefHeight(28);
-        addBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;" + "-fx-padding: 2 6;");
+        addBtn.setStyle(ThemeUI.buttonPrimary()+ "-fx-padding:0;");
 
         row.getChildren().addAll(nameText, spacer, priceText, addBtn);
         return row;
@@ -301,20 +319,9 @@ public class OrdersView {
         qtyText.setFill(Color.web(ThemeUI.TEXT_COLOR));
         qtyText.setFont(ThemeUI.getFontRegular());
 
-        Button minusBtn = ThemeUI.createButton("-");
-        minusBtn.setPrefWidth(28);
-        minusBtn.setPrefHeight(26);
-        minusBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 13px;" + "-fx-padding: 2 6;");
-
-        Button plusBtn = ThemeUI.createButton("+");
-        plusBtn.setPrefWidth(28);
-        plusBtn.setPrefHeight(26);
-        plusBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 13px;" + "-fx-padding: 2 6;");
-
-        Button removeBtn = ThemeUI.createButton("x");
-        removeBtn.setPrefWidth(28);
-        removeBtn.setPrefHeight(26);
-        removeBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 13px;" + "-fx-padding: 2 6;");
+        Button minusBtn = ThemeUI.createIconButton("minus.png");
+        Button plusBtn = ThemeUI.createIconButton("plus.png");
+        Button removeBtn =ThemeUI.createIconButton("remove.png");
 
         row.getChildren().addAll(nameText,qtyText,spacer1, minusBtn, plusBtn, removeBtn);
         return row;

@@ -1,12 +1,17 @@
 package com.coffeeshop.ui;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 import java.security.MessageDigest;
+import java.util.Objects;
 
 public class ThemeUI {
 
@@ -141,5 +146,27 @@ public class ThemeUI {
             System.out.println("Error in generating hash.");
             return "";
         }
+    }
+
+    public static String iconButtonStyle() {
+        return "-fx-background-color: " + BLACK_COLOR + ";" +
+                "-fx-background-radius: 50;" +
+                "-fx-border-radius: 50;" +
+                "-fx-padding: 0;" +
+                "-fx-cursor: hand;";
+    }
+
+    public static Button createIconButton(String fileName) {
+        Image img = new Image(ThemeUI.class.getResourceAsStream("/icons/" + fileName));
+
+        ImageView iv = new ImageView(img);
+        iv.setPreserveRatio(true);
+        iv.setFitWidth(50);
+
+        Button b = new Button();
+        b.setGraphic(iv);
+        b.setStyle(iconButtonStyle());
+
+        return b;
     }
 }
