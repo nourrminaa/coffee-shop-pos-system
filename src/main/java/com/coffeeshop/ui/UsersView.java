@@ -2,8 +2,8 @@ package com.coffeeshop.ui;
 
 import com.coffeeshop.handlers.LogoutButtonHandler;
 import com.coffeeshop.handlers.UsersHandler;
+import com.coffeeshop.utils.UserRow;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;

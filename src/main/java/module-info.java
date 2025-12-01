@@ -8,4 +8,5 @@ module com.coffeeshop {
     opens com.coffeeshop to javafx.fxml;
     exports com.coffeeshop;
     exports com.coffeeshop.ui;
+    exports com.coffeeshop.utils;
 }

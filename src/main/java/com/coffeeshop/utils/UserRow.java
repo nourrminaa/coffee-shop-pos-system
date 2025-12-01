@@ -1,4 +1,4 @@
-package com.coffeeshop.ui;
+package com.coffeeshop.utils;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
