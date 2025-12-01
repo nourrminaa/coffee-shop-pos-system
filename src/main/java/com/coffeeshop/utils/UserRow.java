@@ -5,11 +5,11 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class UserRow {
 
-    private final SimpleIntegerProperty id;
-    private final SimpleStringProperty username;
-    private final SimpleStringProperty displayName;
-    private final SimpleStringProperty role;
-    private final SimpleStringProperty createdAt;
+    private SimpleIntegerProperty id;
+    private SimpleStringProperty username;
+    private SimpleStringProperty displayName;
+    private SimpleStringProperty role;
+    private SimpleStringProperty createdAt;
 
     public UserRow(int id, String username, String displayName, String role, String createdAt) {
         this.id = new SimpleIntegerProperty(id);
