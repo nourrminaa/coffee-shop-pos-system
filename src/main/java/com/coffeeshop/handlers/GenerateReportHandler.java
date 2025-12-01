@@ -86,7 +86,12 @@ public class GenerateReportHandler implements EventHandler<ActionEvent> {
 
                 while (rs.next()) {
                     has = true;
-                    sales += rs.getString("display_name") + " | Orders: " + rs.getInt("c") + " | Sales: " + rs.getInt("s") + " LBP\n";
+                    String name = rs.getString("display_name");
+                    int c = rs.getInt("c");
+                    int s = rs.getInt("s");
+
+                    // pad columns so | always align (-20 is the padding and %s -> String, %d -> int)
+                    sales += String.format("%-50s | Orders: %-50d | Sales: %d LBP", name, c, s);
                 }
                 // if no sales for cashier/admin
                 if (!has) sales += "No sales.\n";
@@ -104,7 +109,12 @@ public class GenerateReportHandler implements EventHandler<ActionEvent> {
                 boolean has = false;
                 while (rs.next()) {
                     has = true;
-                    topProduct += rank++ + ". " + rs.getString("name") + " (" + rs.getString("category") + ") | Qty: " + rs.getInt("q") + " | Revenue: " + rs.getInt("t") + " LBP\n";
+                    String name = rs.getString("name");
+                    String category = rs.getString("category");
+                    int qVal = rs.getInt("q");
+                    int tVal = rs.getInt("t");
+
+                    topProduct += String.format("%d. %s (%s) %-50s| Qty: %-50d | Revenue: %d LBP\n", rank++, name, category,"", qVal, tVal);
                 }
                 if (!has) topProduct += "No product sales.\n";
             } catch (Exception e) {
@@ -119,7 +129,12 @@ public class GenerateReportHandler implements EventHandler<ActionEvent> {
 
                 while (rs.next()) {
                     String icon = (rs.getInt("stock_qty") <= rs.getInt("min_stock_qty")) ? "[!]" : "   ";
-                    inventoryStatus += icon + " " + rs.getString("name") + " (" + rs.getString("category") + ")" + " | Stock: " + rs.getInt("stock_qty") + " | Min: " + rs.getInt("min_stock_qty") + "\n";
+                    String name = rs.getString("name");
+                    String category = rs.getString("category");
+                    int stock = rs.getInt("stock_qty");
+                    int min = rs.getInt("min_stock_qty");
+
+                    inventoryStatus += String.format("%-3s %s (%s) %-50s| Stock: %-50d | Min: %d\n", icon, name, category,"", stock, min);
                 }
             } catch (Exception e) {
                 inventoryStatus += "Error! \n";
