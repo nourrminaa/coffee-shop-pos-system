@@ -3,7 +3,6 @@ package com.coffeeshop.handlers;
 import com.coffeeshop.ui.LoginView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

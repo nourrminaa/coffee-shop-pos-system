@@ -3,7 +3,6 @@ package com.coffeeshop.handlers;
 import com.coffeeshop.ui.UserRow;
 import com.coffeeshop.ui.UsersView;
 import com.coffeeshop.ui.ThemeUI;
-import com.coffeeshop.models.User;
 import com.coffeeshop.factory.DefaultUserFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
