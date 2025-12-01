@@ -1,6 +1,6 @@
 package com.coffeeshop.handlers;
 
-import com.coffeeshop.ui.UserRow;
+import com.coffeeshop.utils.UserRow;
 import com.coffeeshop.ui.UsersView;
 import com.coffeeshop.ui.ThemeUI;
 import com.coffeeshop.factory.DefaultUserFactory;
