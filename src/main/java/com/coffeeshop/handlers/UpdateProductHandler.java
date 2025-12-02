@@ -23,8 +23,9 @@ public class UpdateProductHandler implements EventHandler<ActionEvent> {
     private CheckBox addonCheckBox;
     private CheckBox activeCheckBox;
     private InventoryView parent;
+    private OrdersView ordersView;
 
-    public UpdateProductHandler(Statement st, TableView<ProductRow> productsTable, TextField nameField, TextField categoryField, TextField priceField, TextField stockField, TextField minStockField, CheckBox addonCheckBox, CheckBox activeCheckBox, InventoryView parent) {
+    public UpdateProductHandler(Statement st, TableView<ProductRow> productsTable, TextField nameField, TextField categoryField, TextField priceField, TextField stockField, TextField minStockField, CheckBox addonCheckBox, CheckBox activeCheckBox, InventoryView parent, OrdersView ordersView) {
         this.st = st;
         this.productsTable = productsTable;
         this.nameField = nameField;
@@ -35,6 +36,7 @@ public class UpdateProductHandler implements EventHandler<ActionEvent> {
         this.addonCheckBox = addonCheckBox;
         this.activeCheckBox = activeCheckBox;
         this.parent = parent;
+        this.ordersView = ordersView;
     }
 
     @Override
@@ -70,11 +72,10 @@ public class UpdateProductHandler implements EventHandler<ActionEvent> {
             int minStock = Integer.parseInt(minStockText);
 
             String q = "UPDATE products SET " + "name = '" + name + "', " + "category = '" + category + "', " + "price_lbp = " + price + ", " + "stock_qty = " + stock + ", " + "min_stock_qty = " + minStock + ", " + "is_addon = " + (addon ? 1 : 0) + ", " + "is_active = " + (active ? 1 : 0) + " WHERE id = " + selected.getId();
-            int rows = st.executeUpdate(q);
-            if (rows > 0) {
-                parent.clearForm();
-                parent.loadProducts();
-            }
+            st.executeUpdate(q);
+            parent.clearForm();
+            parent.loadProducts();
+            ordersView.refreshCategories();
         } catch (NumberFormatException ex) {
             System.err.println("ERROR: Price, Stock, and Min Stock must be numbers.");
         } catch (Exception ex) {

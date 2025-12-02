@@ -14,11 +14,13 @@ public class DeleteProductHandler implements EventHandler<ActionEvent> {
     private Statement st;
     private TableView<ProductRow> productsTable;
     private InventoryView parent;
+    private OrdersView ordersView;
 
-    public DeleteProductHandler(Statement st,TableView<ProductRow> productsTable,InventoryView parent) {
+    public DeleteProductHandler(Statement st,TableView<ProductRow> productsTable,InventoryView parent, OrdersView ordersView) {
         this.st = st;
         this.productsTable = productsTable;
         this.parent = parent;
+        this.ordersView = ordersView;
     }
 
     @Override
@@ -35,11 +37,10 @@ public class DeleteProductHandler implements EventHandler<ActionEvent> {
         }
         try {
             String q = "DELETE FROM products WHERE id = " + selected.getId();
-            int rows = st.executeUpdate(q);
-            if (rows > 0) {
-                parent.clearForm();
-                parent.loadProducts();
-            }
+            st.executeUpdate(q);
+            parent.clearForm();
+            parent.loadProducts();
+            ordersView.refreshCategories();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

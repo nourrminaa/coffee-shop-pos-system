@@ -33,9 +33,13 @@ public class InventoryView {
     private CheckBox activeCheckBox;
     private TableView<ProductRow> productsTable;
 
-    public InventoryView(Statement st, Stage stage) {
+    // added to be able to refresh the orders view when admin adds/deletes/updates a new item
+    private OrdersView ordersView;
+
+    public InventoryView(Statement st, Stage stage, OrdersView ordersView) {
         this.st = st;
         this.stage = stage;
+        this.ordersView = ordersView;
     }
 
     public BorderPane getInventoryGUI() {
@@ -223,21 +227,21 @@ public class InventoryView {
         addProductBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
         addProductBtn.setOnAction(new AddProductHandler(st, nameField, categoryField, priceField, stockField, minStockField, addonCheckBox, activeCheckBox
                 , this // pass this class (Inventory View) to access the refresh methods
-        ));
+                , ordersView)); // to update the categories & products
         Button updateProductBtn = ThemeUI.createButton("Update Product");
         updateProductBtn.setMaxWidth(1400);
         updateProductBtn.setPrefHeight(42);
         updateProductBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
         updateProductBtn.setOnAction(new UpdateProductHandler(st, productsTable, nameField, categoryField, priceField, stockField, minStockField, addonCheckBox, activeCheckBox,
                 this
-        ));
+                , ordersView));
         Button deleteProductBtn = ThemeUI.createButton("Delete Product");
         deleteProductBtn.setMaxWidth(1400);
         deleteProductBtn.setPrefHeight(42);
         deleteProductBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
         deleteProductBtn.setOnAction(new DeleteProductHandler(st, productsTable,
                 this
-        ));
+                , ordersView));
         rightPane.getChildren().addAll(formTitle, nameBox, categoryBox, priceBox, stockBox, minStockBox, flagsBox, addProductBtn, updateProductBtn, deleteProductBtn);
 
         // width ratio

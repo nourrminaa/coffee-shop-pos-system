@@ -20,8 +20,10 @@ public class AddProductHandler implements EventHandler<ActionEvent> {
     private CheckBox addonCheckBox;
     private CheckBox activeCheckBox;
     private InventoryView parent;
+    private OrdersView ordersView;
 
-    public AddProductHandler(Statement st, TextField nameField, TextField categoryField, TextField priceField, TextField stockField, TextField minStockField, CheckBox addonCheckBox, CheckBox activeCheckBox, InventoryView parent) {
+
+    public AddProductHandler(Statement st, TextField nameField, TextField categoryField, TextField priceField, TextField stockField, TextField minStockField, CheckBox addonCheckBox, CheckBox activeCheckBox, InventoryView parent, OrdersView ordersView) {
         this.st = st;
         this.nameField = nameField;
         this.categoryField = categoryField;
@@ -31,6 +33,7 @@ public class AddProductHandler implements EventHandler<ActionEvent> {
         this.addonCheckBox = addonCheckBox;
         this.activeCheckBox = activeCheckBox;
         this.parent = parent;
+        this.ordersView = ordersView;
     }
 
     @Override
@@ -59,12 +62,11 @@ public class AddProductHandler implements EventHandler<ActionEvent> {
             int minStock = Integer.parseInt(minStockText);
 
             String insert = "INSERT INTO products (name, category, price_lbp, stock_qty, min_stock_qty, is_addon, is_active) VALUES (" + "'" + name + "', " + "'" + category + "', " + price + ", " + stock + ", " + minStock + ", " + (isAddon ? 1 : 0) + ", " + (isActive ? 1 : 0) + ")";
-            int rows = st.executeUpdate(insert);
+            st.executeUpdate(insert);
             // update table
-            if (rows > 0) {
-                parent.clearForm();
-                parent.loadProducts();
-            }
+            parent.clearForm();
+            parent.loadProducts();
+            ordersView.refreshCategories();
         } catch (NumberFormatException nfe) {
             System.err.println("ERROR: Price, Stock, and Min Stock must be numbers.");
         } catch (Exception e) {

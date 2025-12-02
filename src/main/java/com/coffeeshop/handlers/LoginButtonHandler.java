@@ -80,10 +80,15 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
                 TabPane tabPane = new TabPane();
                 ThemeUI.applyTabPaneTheme(tabPane); // function that styles the tabPane
 
-                Tab ordersTab = new Tab("Orders Tab", new OrdersView(st, stage, loggedUser.getId()).getOrdersGUI());
-                ordersTab.setClosable(false); // to not close by accident the tab
+                OrdersView ordersView = new OrdersView(st, stage, loggedUser.getId());
 
-                Tab inventoryTab = new Tab("Inventory Management Tab", new InventoryView(st, stage).getInventoryGUI());
+                // takes the order view for update
+                InventoryView inventoryView = new InventoryView(st, stage, ordersView);
+
+                Tab ordersTab = new Tab("Orders Tab", ordersView.getOrdersGUI());
+                ordersTab.setClosable(false);
+
+                Tab inventoryTab = new Tab("Inventory Management Tab", inventoryView.getInventoryGUI());
                 inventoryTab.setClosable(false);
 
                 Tab usersTab = new Tab("Users Management Tab", new UsersView(st, stage).getUsersGUI());
