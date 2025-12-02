@@ -50,7 +50,7 @@ public class SearchOrdersHandler implements EventHandler<ActionEvent> {
                 int price = rs.getInt("price_lbp");
                 int stock = rs.getInt("stock_qty");
                 int min = rs.getInt("min_stock_qty");
-                String priceText = price + "LBP";
+                String priceText = price + " LBP";
 
                 // using the min quantity & stock because it will be needed if the user tries to add an item to cart
                 // using the button in the itemRow
