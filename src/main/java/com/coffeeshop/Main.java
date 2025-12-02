@@ -21,7 +21,7 @@ public class Main extends Application {
         Scene loginScene = new Scene(loginView.getLoginGUI(), 1400, 1400);
 
         // set from here to take the stage so we can modify later
-        loginView.loginBtn.setOnAction(new LoginButtonHandler(st, loginView.usernameTextField, loginView.passwordField, primaryStage));
+        loginView.loginBtn.setOnAction(new LoginButtonHandler(st, loginView.usernameTextField, loginView.passwordField, primaryStage, loginView));
 
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("CoffeeShop POS - Login");

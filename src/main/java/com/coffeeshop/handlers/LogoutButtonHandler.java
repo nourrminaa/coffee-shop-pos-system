@@ -28,7 +28,7 @@ public class LogoutButtonHandler implements EventHandler<ActionEvent> {
         }
         LoginView loginView = new LoginView(st, stage);
         Scene loginScene = new Scene(loginView.getLoginGUI(), 1400, 800);
-        loginView.loginBtn.setOnAction(new LoginButtonHandler(st, loginView.usernameTextField, loginView.passwordField, stage));
+        loginView.loginBtn.setOnAction(new LoginButtonHandler(st, loginView.usernameTextField, loginView.passwordField, stage, loginView));
 
         stage.setScene(loginScene);
         stage.setTitle("CoffeeShop POS - Login");

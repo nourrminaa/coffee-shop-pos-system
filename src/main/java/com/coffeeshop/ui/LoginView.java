@@ -1,5 +1,6 @@
 package com.coffeeshop.ui;
 
+import com.coffeeshop.handlers.LoginButtonHandler;
 import com.coffeeshop.utils.ThemeUI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,6 +23,8 @@ public class LoginView {
     // used PasswordField to hide the text being written
     public PasswordField passwordField;
     public Button loginBtn;
+
+    private Text loginError;
 
     private Statement st;
     private Stage stage;
@@ -60,13 +63,17 @@ public class LoginView {
         // used the Color.web to be able to use the String defined in Theme Class for modular colors
         loginTitle.setFill(Color.web(ThemeUI.TEXT_COLOR));
 
+        loginError = new Text(" ");          // empty but keeps space
+        loginError.setFill(Color.RED);
+        loginError.setStyle("-fx-font-size: 14px;");
+
         usernameTextField = ThemeUI.createTextField("Username");
         passwordField = ThemeUI.createPasswordField("Password");
 
         loginBtn = ThemeUI.createButton("Login");
         loginBtn.setPrefWidth(1000);
 
-        rightPane.getChildren().addAll(loginTitle, usernameTextField, passwordField, loginBtn);
+        rightPane.getChildren().addAll(loginTitle, loginError, usernameTextField, passwordField, loginBtn );
 
         // set the prefered width of both panes to half the root/display resolution of our
         // screen to always have a half left pane/ half right pane design
@@ -75,6 +82,10 @@ public class LoginView {
 
         root.getChildren().addAll(leftPane, rightPane);
         return root;
+    }
+
+    public void setLoginError(String message) {
+        loginError.setText(message);
     }
 
     //    @Override

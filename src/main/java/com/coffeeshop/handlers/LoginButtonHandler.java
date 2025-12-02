@@ -27,12 +27,14 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
     private TextField usernameTextField;
     private PasswordField passwordField;
     private Stage stage;
+    private LoginView loginView;
 
-    public LoginButtonHandler(Statement st, TextField usernameTextField, PasswordField passwordField, Stage stage) {
+    public LoginButtonHandler(Statement st, TextField usernameTextField, PasswordField passwordField, Stage stage, LoginView loginView) {
         this.st = st;
         this.usernameTextField = usernameTextField;
         this.passwordField = passwordField;
         this.stage = stage;
+        this.loginView = loginView;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
 
             // blank means empty or only spaces
             if (username.isBlank() || password.isBlank()) {
-                System.err.println("Username and password cannot be blank.");
+                loginView.setLoginError("Username and password cannot be blank.");
                 return;
             }
 
@@ -62,9 +64,10 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
             ResultSet rs = st.executeQuery("SELECT id, username, password_hash, display_name, role FROM users WHERE username='" + safeUsername + "' AND password_hash='" + hashedPassword + "'");
 
             if (!rs.next()) {
-                System.err.println("Invalid username or password");
+                loginView.setLoginError("Invalid username or password.");
                 return;
             }
+            loginView.setLoginError(" ");
 
             IUserFactory userFactory = new DefaultUserFactory();
 
@@ -115,7 +118,6 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error during login process.");
         }
     }
 }
