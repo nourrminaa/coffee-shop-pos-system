@@ -1,9 +1,9 @@
 package com.coffeeshop.handlers;
 
 import com.coffeeshop.ui.OrdersView;
-import com.coffeeshop.utils.UserRow;
+import com.coffeeshop.models.UserRow;
 import com.coffeeshop.ui.UsersView;
-import com.coffeeshop.ui.ThemeUI;
+import com.coffeeshop.utils.ThemeUI;
 import com.coffeeshop.factory.DefaultUserFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

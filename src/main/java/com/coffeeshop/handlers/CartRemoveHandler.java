@@ -1,7 +1,7 @@
 package com.coffeeshop.handlers;
 
 import com.coffeeshop.ui.OrdersView;
-import com.coffeeshop.utils.CartItem;
+import com.coffeeshop.models.CartItem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 

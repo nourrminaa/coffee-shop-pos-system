@@ -2,7 +2,7 @@ package com.coffeeshop.handlers;
 
 import com.coffeeshop.ui.InventoryView;
 import com.coffeeshop.ui.OrdersView;
-import com.coffeeshop.utils.ProductRow;
+import com.coffeeshop.models.ProductRow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;

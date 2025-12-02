@@ -1,5 +1,6 @@
 package com.coffeeshop.handlers;
 
+import com.coffeeshop.models.*;
 import com.coffeeshop.ui.OrdersView;
 import com.coffeeshop.utils.*;
 import javafx.event.ActionEvent;
@@ -36,7 +37,7 @@ public class ExportPDFHandler implements EventHandler<ActionEvent> {
             // getting the DateRange (from/to) selected in the ComboBox
             LocalDate now = LocalDate.now();
             // customized for date simplification
-            DateRange range = new com.coffeeshop.utils.DateRange();
+            DateRange range = new DateRange();
 
             switch (periodCombo.getValue()) {
                 case "Today":

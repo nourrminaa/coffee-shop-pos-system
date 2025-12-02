@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import com.coffeeshop.utils.ProductRow;
 
 import java.sql.Statement;
 

@@ -1,7 +1,7 @@
 package com.coffeeshop.handlers;
 
 import com.coffeeshop.ui.OrdersView;
-import com.coffeeshop.utils.DateRange;
+import com.coffeeshop.models.DateRange;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;

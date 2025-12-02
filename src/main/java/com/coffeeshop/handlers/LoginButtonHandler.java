@@ -7,6 +7,7 @@ import com.coffeeshop.models.Cashier;
 import com.coffeeshop.models.User;
 import com.coffeeshop.ui.*;
 
+import com.coffeeshop.utils.ThemeUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
