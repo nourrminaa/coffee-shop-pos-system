@@ -51,10 +51,7 @@ public class AddProductHandler implements EventHandler<ActionEvent> {
         boolean isAddon = addonCheckBox.isSelected();
         boolean isActive = activeCheckBox.isSelected();
 
-        if (name.isEmpty() || category.isEmpty() || priceText.isEmpty() || stockText.isEmpty() || minStockText.isEmpty()) {
-            System.err.println("ERROR: All fields are required for adding product.");
-            return;
-        }
+        if (!parent.validateInputs()) return;
 
         try {
             int price = Integer.parseInt(priceText);

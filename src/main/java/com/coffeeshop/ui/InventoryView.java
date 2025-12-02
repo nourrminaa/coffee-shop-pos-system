@@ -32,6 +32,7 @@ public class InventoryView {
     private CheckBox addonCheckBox;
     private CheckBox activeCheckBox;
     private TableView<ProductRow> productsTable;
+    private Text formError;
 
     // added to be able to refresh the orders view when admin adds/deletes/updates a new item
     private OrdersView ordersView;
@@ -145,6 +146,10 @@ public class InventoryView {
         formTitle.setFill(Color.web(ThemeUI.TEXT_COLOR));
         formTitle.setFont(ThemeUI.getFontBold());
 
+        formError = new Text(" ");
+        formError.setFill(Color.RED);
+        formError.setStyle("-fx-font-size: 13px;");
+
         // name
         VBox nameBox = new VBox(6);
         Text nameLabel = new Text("Product Name");
@@ -242,7 +247,7 @@ public class InventoryView {
         deleteProductBtn.setOnAction(new DeleteProductHandler(st, productsTable,
                 this
                 , ordersView));
-        rightPane.getChildren().addAll(formTitle, nameBox, categoryBox, priceBox, stockBox, minStockBox, flagsBox, addProductBtn, updateProductBtn, deleteProductBtn);
+        rightPane.getChildren().addAll(formTitle,formError, nameBox, categoryBox, priceBox, stockBox, minStockBox, flagsBox, addProductBtn, updateProductBtn, deleteProductBtn);
 
         // width ratio
         leftPane.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.75));
@@ -287,4 +292,26 @@ public class InventoryView {
         addonCheckBox.setSelected(false);
         activeCheckBox.setSelected(true);
     }
+
+    public void setFormError(String message) {
+        formError.setText(message);
+    }
+
+    public boolean validateInputs() {
+
+        String name = nameField.getText().trim();
+        String category = categoryField.getText().trim();
+        String priceText = priceField.getText().trim();
+        String stockText = stockField.getText().trim();
+        String minStockText = minStockField.getText().trim();
+
+        if (name.isEmpty() || category.isEmpty() || priceText.isEmpty() || stockText.isEmpty() || minStockText.isEmpty()) {
+            formError.setText("Invalid input! Please check all fields.");
+            return false;
+        }
+
+        formError.setText(" ");
+        return true;
+    }
+
 }

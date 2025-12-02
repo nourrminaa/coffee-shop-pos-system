@@ -49,7 +49,7 @@ public class UpdateProductHandler implements EventHandler<ActionEvent> {
 
         ProductRow selected = productsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            view.showWarning("ERROR!", " Select a product first.");
+            parent.setFormError("Select a product first.");
             return;
         }
 
@@ -61,10 +61,7 @@ public class UpdateProductHandler implements EventHandler<ActionEvent> {
         boolean addon = addonCheckBox.isSelected();
         boolean active = activeCheckBox.isSelected();
 
-        if (name.isEmpty() || category.isEmpty() || priceText.isEmpty() || stockText.isEmpty() || minStockText.isEmpty()) {
-            System.err.println("ERROR: All fields are required for updating product.");
-            return;
-        }
+        if (!parent.validateInputs()) return;
 
         try {
             int price = Integer.parseInt(priceText);
@@ -77,7 +74,7 @@ public class UpdateProductHandler implements EventHandler<ActionEvent> {
             parent.loadProducts();
             ordersView.refreshCategories();
         } catch (NumberFormatException ex) {
-            System.err.println("ERROR: Price, Stock, and Min Stock must be numbers.");
+            parent.setFormError("Invalid numeric values.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
