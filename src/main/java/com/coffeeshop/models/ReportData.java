@@ -1,4 +1,4 @@
-package com.coffeeshop.utils;
+package com.coffeeshop.models;
 
 import java.util.List;
 

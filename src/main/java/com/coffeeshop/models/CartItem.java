@@ -1,4 +1,4 @@
-package com.coffeeshop.utils;
+package com.coffeeshop.models;
 
 public class CartItem {
     public String name;

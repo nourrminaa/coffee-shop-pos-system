@@ -1,17 +1,14 @@
-package com.coffeeshop.ui;
+package com.coffeeshop.utils;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 import java.security.MessageDigest;
-import java.util.Objects;
 
 public class ThemeUI {
 
