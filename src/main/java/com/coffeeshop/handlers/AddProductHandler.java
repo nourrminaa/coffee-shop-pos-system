@@ -1,6 +1,7 @@
 package com.coffeeshop.handlers;
 
 import com.coffeeshop.ui.InventoryView;
+import com.coffeeshop.ui.OrdersView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
@@ -35,6 +36,11 @@ public class AddProductHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        OrdersView view = new OrdersView();
+        if (st == null) {
+            view.showWarning("Error!", "Database not connected.");
+            return;
+        }
         String name = nameField.getText().trim();
         String category = categoryField.getText().trim();
         String priceText = priceField.getText().trim();

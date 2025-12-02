@@ -1,6 +1,7 @@
 package com.coffeeshop.handlers;
 
 import com.coffeeshop.ui.LoginView;
+import com.coffeeshop.ui.OrdersView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -20,6 +21,11 @@ public class LogoutButtonHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        OrdersView view = new OrdersView();
+        if (st == null) {
+            view.showWarning("Error!", "Database not connected.");
+            return;
+        }
         LoginView loginView = new LoginView(st, stage);
         Scene loginScene = new Scene(loginView.getLoginGUI(), 1400, 800);
         loginView.loginBtn.setOnAction(new LoginButtonHandler(st, loginView.usernameTextField, loginView.passwordField, stage));

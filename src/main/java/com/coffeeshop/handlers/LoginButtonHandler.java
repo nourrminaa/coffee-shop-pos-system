@@ -37,6 +37,11 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         try {
+            OrdersView view = new OrdersView();
+            if (st == null) {
+                view.showWarning("Error!", "Database not connected.");
+                return;
+            }
             String username = usernameTextField.getText();
             String password = passwordField.getText();
 

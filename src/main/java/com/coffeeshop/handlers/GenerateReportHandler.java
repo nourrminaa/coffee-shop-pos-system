@@ -1,5 +1,6 @@
 package com.coffeeshop.handlers;
 
+import com.coffeeshop.ui.OrdersView;
 import com.coffeeshop.utils.DateRange;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,6 +28,11 @@ public class GenerateReportHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         try {
+            OrdersView view = new OrdersView();
+            if (st == null) {
+                view.showWarning("Error!", "Database not connected.");
+                return;
+            }
             // getting the DateRange (from/to) selected in the ComboBox
             LocalDate now = LocalDate.now();
             // customized for date simplification

@@ -30,6 +30,10 @@ public class AddToCartHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        if (st == null) {
+            view.showWarning("Error!", "Database not connected.");
+            return;
+        }
         if (stockQty <= 0) {
             view.showWarning("OUT OF STOCK!", name + " is out of stock.");
             return;

@@ -1,5 +1,6 @@
 package com.coffeeshop.handlers;
 
+import com.coffeeshop.ui.OrdersView;
 import com.coffeeshop.utils.UserRow;
 import com.coffeeshop.ui.UsersView;
 import com.coffeeshop.ui.ThemeUI;
@@ -23,7 +24,11 @@ public class UsersHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent e) {
-
+        OrdersView view = new OrdersView();
+        if (st == null) {
+            view.showWarning("Error!", "Database not connected.");
+            return;
+        }
         Button btn = (Button) e.getSource();
 
         if (btn.getText().equals("Add User")) {

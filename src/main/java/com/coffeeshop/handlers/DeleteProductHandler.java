@@ -1,6 +1,7 @@
 package com.coffeeshop.handlers;
 
 import com.coffeeshop.ui.InventoryView;
+import com.coffeeshop.ui.OrdersView;
 import com.coffeeshop.utils.ProductRow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +23,11 @@ public class DeleteProductHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
+        OrdersView view = new OrdersView();
+        if (st == null) {
+            view.showWarning("Error!", "Database not connected.");
+            return;
+        }
         ProductRow selected = productsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             System.err.println("ERROR: Select a product to delete.");
