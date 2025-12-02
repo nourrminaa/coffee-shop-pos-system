@@ -3,6 +3,7 @@ package com.coffeeshop.ui;
 import com.coffeeshop.handlers.ExportPDFHandler;
 import com.coffeeshop.handlers.GenerateReportHandler;
 import com.coffeeshop.handlers.LogoutButtonHandler;
+import com.coffeeshop.utils.ThemeUI;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
