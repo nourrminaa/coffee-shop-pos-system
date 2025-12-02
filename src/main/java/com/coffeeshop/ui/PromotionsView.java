@@ -167,7 +167,10 @@ public class PromotionsView {
         deletePromotionBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 14px;");
         deletePromotionBtn.setOnAction(new DeletePromotionHandler(st, promotionsTable, this, ordersView));
 
-        rightPane.getChildren().addAll(formTitle, formError, nameBox, percentBox, flagsBox, addPromotionBtn, updatePromotionBtn, deletePromotionBtn);
+        Region spacer1 = new Region();
+        HBox.setHgrow(spacer1, Priority.ALWAYS);
+
+        rightPane.getChildren().addAll(formTitle, formError, nameBox, percentBox, flagsBox, spacer1,addPromotionBtn, updatePromotionBtn, deletePromotionBtn);
 
         leftPane.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.75));
         rightPane.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.25));
