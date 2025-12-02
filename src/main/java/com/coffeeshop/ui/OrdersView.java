@@ -16,6 +16,9 @@ import com.coffeeshop.handlers.SearchOrdersHandler;
 import com.coffeeshop.handlers.LogoutButtonHandler;
 import com.coffeeshop.observers.ReceiptObserver;
 
+import com.coffeeshop.models.PromotionRow;
+
+
 import com.coffeeshop.utils.ThemeUI;
 import javafx.geometry.Insets;
 import javafx.geometry.Side;
@@ -47,6 +50,8 @@ public class OrdersView {
     private Integer appliedPromotionId;
     private int appliedDiscountPercent;
     private ReceiptObserver receiptObserver;
+
+    private ComboBox<PromotionRow> discountCombo;
 
     public OrdersView() {
         // empty constructor for handlers that only need showWarning()
@@ -161,16 +166,18 @@ public class OrdersView {
 
         HBox discountRow = new HBox(6);
 
-        TextField discountField = ThemeUI.createTextField("Enter code");
-        discountField.setPrefHeight(32);
-        discountField.setStyle(ThemeUI.textFieldStyle() + "-fx-font-size: 13px;");
+        discountCombo = new ComboBox<>();
+        discountCombo.setPrefHeight(32);
+        discountCombo.setStyle(ThemeUI.textFieldStyle() + "-fx-font-size: 13px;");
+        discountCombo.setPromptText("Select promotion");
+        discountCombo.setMaxWidth(Double.MAX_VALUE);
 
         Button applyDiscountBtn = ThemeUI.createButton("Apply");
         applyDiscountBtn.setPrefHeight(32);
         applyDiscountBtn.setStyle(ThemeUI.buttonPrimary() + "-fx-font-size: 12px;");
 
-        HBox.setHgrow(discountField, Priority.ALWAYS);
-        discountRow.getChildren().addAll(discountField, applyDiscountBtn);
+        HBox.setHgrow(discountCombo, Priority.ALWAYS);
+        discountRow.getChildren().addAll(discountCombo, applyDiscountBtn);
         discountArea.getChildren().addAll(discountLabel, discountRow);
 
         VBox receiptPane = new VBox(8);
@@ -267,12 +274,37 @@ public class OrdersView {
 
         // button handlers
         searchBtn.setOnAction(new SearchOrdersHandler(st, searchField, itemsBox, this));
-        applyDiscountBtn.setOnAction(new ApplyDiscountHandler(st, discountField, this));
         checkoutBtn.setOnAction(new CheckoutHandler(st, this, userId));
+        applyDiscountBtn.setOnAction(new ApplyDiscountHandler(st, discountCombo, this));
 
         loadItems("All");
+        loadPromotions();
 
         return root;
+    }
+
+    public void loadPromotions() {
+        if (discountCombo == null) {
+            return;
+        }
+        discountCombo.getItems().clear();
+        try {
+            String sql = "SELECT id, name, percent_off, is_active FROM promotions WHERE is_active = 1 ORDER BY name";
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int percent = rs.getInt("percent_off");
+                PromotionRow row = new PromotionRow(id, name, percent, "Yes");
+                discountCombo.getItems().add(row);
+            }
+            rs.close();
+        } catch (Exception e) {
+        }
+    }
+
+    public void refreshPromotions() {
+        loadPromotions();
     }
 
     // items box (VBox) gets filled with item rows (HBox)

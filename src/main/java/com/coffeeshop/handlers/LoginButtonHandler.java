@@ -61,7 +61,7 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
             // by replacing ' with '': SELECT * FROM users WHERE username='  '' OR 1=1 --  '
             String safeUsername = username.replace("'", "''");
 
-            ResultSet rs = st.executeQuery("SELECT id, username, password_hash, display_name, role FROM users WHERE username='" + safeUsername + "' AND password_hash='" + hashedPassword + "'");
+            ResultSet rs = st.executeQuery("SELECT id, username, password_hash, display_name, role " + "FROM users WHERE username='" + safeUsername + "' AND password_hash='" + hashedPassword + "'");
 
             if (!rs.next()) {
                 loginView.setLoginError("Invalid username or password.");
@@ -71,22 +71,16 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
 
             IUserFactory userFactory = new DefaultUserFactory();
 
-            User loggedUser = userFactory.create(
-                    rs.getInt("id"),
-                    rs.getString("username"),
-                    rs.getString("password_hash"),
-                    rs.getString("display_name"),
-                    rs.getString("role")
-            );
+            User loggedUser = userFactory.create(rs.getInt("id"), rs.getString("username"), rs.getString("password_hash"), rs.getString("display_name"), rs.getString("role"));
 
             if (loggedUser instanceof Admin) {
                 TabPane tabPane = new TabPane();
-                ThemeUI.applyTabPaneTheme(tabPane); // function that styles the tabPane
+                ThemeUI.applyTabPaneTheme(tabPane);
 
                 OrdersView ordersView = new OrdersView(st, stage, loggedUser.getId());
 
-                // takes the order view for update
                 InventoryView inventoryView = new InventoryView(st, stage, ordersView);
+                PromotionsView promotionsView = new PromotionsView(st, stage, ordersView);
 
                 Tab ordersTab = new Tab("Orders Tab", ordersView.getOrdersGUI());
                 ordersTab.setClosable(false);
@@ -94,12 +88,16 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
                 Tab inventoryTab = new Tab("Inventory Management Tab", inventoryView.getInventoryGUI());
                 inventoryTab.setClosable(false);
 
+                Tab promotionsTab = new Tab("Promotions Management Tab", promotionsView.getPromotionsGUI());
+                promotionsTab.setClosable(false);
+
                 Tab usersTab = new Tab("Users Management Tab", new UsersView(st, stage).getUsersGUI());
                 usersTab.setClosable(false);
 
                 Tab reportsTab = new Tab("Reports Tab", new ReportsView(st, stage).getReportsGUI());
                 reportsTab.setClosable(false);
-                tabPane.getTabs().addAll(ordersTab, inventoryTab, usersTab, reportsTab);
+
+                tabPane.getTabs().addAll(ordersTab, inventoryTab, promotionsTab, usersTab, reportsTab);
 
                 Scene scene = new Scene(tabPane, 1400, 1400);
                 stage.setScene(scene);
