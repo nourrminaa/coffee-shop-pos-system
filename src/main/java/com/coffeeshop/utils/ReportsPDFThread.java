@@ -1,5 +1,9 @@
 package com.coffeeshop.utils;
 
+import com.coffeeshop.models.InventoryRow;
+import com.coffeeshop.models.ReportData;
+import com.coffeeshop.models.SalesByCashierRow;
+import com.coffeeshop.models.TopProductRow;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import org.apache.pdfbox.pdmodel.PDDocument;
