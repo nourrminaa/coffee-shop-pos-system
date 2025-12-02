@@ -168,7 +168,7 @@ public class PromotionsView {
         deletePromotionBtn.setOnAction(new DeletePromotionHandler(st, promotionsTable, this, ordersView));
 
         Region spacer1 = new Region();
-        HBox.setHgrow(spacer1, Priority.ALWAYS);
+        VBox.setVgrow(spacer1, Priority.ALWAYS);
 
         rightPane.getChildren().addAll(formTitle, formError, nameBox, percentBox, flagsBox, spacer1,addPromotionBtn, updatePromotionBtn, deletePromotionBtn);
 
