@@ -253,7 +253,13 @@ public class InventoryView {
         leftPane.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.75));
         rightPane.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.25));
 
-        mainContent.getChildren().addAll(leftPane, rightPane);
+        ScrollPane rightScroll = new ScrollPane(rightPane);
+        rightScroll.setFitToWidth(true);
+        rightScroll.setStyle("-fx-background: transparent; -fx-control-inner-background: " + ThemeUI.BG_COLOR + ";");
+        rightScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        rightScroll.setPrefWidth(380);
+
+        mainContent.getChildren().addAll(leftPane, rightScroll);
         root.setCenter(mainContent);
         loadProducts();
 
