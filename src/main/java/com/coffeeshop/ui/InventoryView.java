@@ -22,7 +22,7 @@ public class InventoryView {
     private Statement st;
     private Stage stage;
 
-    // here to make them accessible by the helper functions
+    // added here to make them accessible to the helper functions
     private TextField nameField;
     private TextField categoryField;
     private TextField priceField;
