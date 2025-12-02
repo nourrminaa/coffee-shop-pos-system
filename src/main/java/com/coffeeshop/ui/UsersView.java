@@ -66,9 +66,8 @@ public class UsersView {
         usersListTitle.setFont(ThemeUI.getFontBold());
 
         usersTable = new TableView<>();
-        usersTable.setStyle(ThemeUI.tableStyle());
         usersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); // used to resize columns equally
-
+        usersTable.setStyle("-fx-background-color: " + ThemeUI.BG_COLOR + ";" + "-fx-control-inner-background: " + ThemeUI.BG_COLOR + ";" + "-fx-text-fill: " + ThemeUI.TEXT_COLOR + ";" + "-fx-border-color: " + ThemeUI.BLACK_COLOR + ";");
         TableColumn<UserRow, Integer> idCol = new TableColumn<>("ID");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         idCol.setStyle("-fx-font-size: 14px;");
