@@ -23,8 +23,7 @@ public class ReceiptPDFThread extends Thread {
     private final List<CartItem> items;
     private final int total;
 
-    public ReceiptPDFThread(String filePath, int orderId, String cashierName,
-                            List<CartItem> items, int total) {
+    public ReceiptPDFThread(String filePath, int orderId, String cashierName, List<CartItem> items, int total) {
         this.filePath = filePath;
         this.orderId = orderId;
         this.cashierName = cashierName;
