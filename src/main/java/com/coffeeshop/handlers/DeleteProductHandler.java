@@ -25,9 +25,8 @@ public class DeleteProductHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        OrdersView view = new OrdersView();
         if (st == null) {
-            view.showWarning("Error!", "Database not connected.");
+            ordersView.showWarning("Error!", "Database not connected.");
             return;
         }
         ProductRow selected = productsTable.getSelectionModel().getSelectedItem();
@@ -42,7 +41,15 @@ public class DeleteProductHandler implements EventHandler<ActionEvent> {
             parent.loadProducts();
             ordersView.refreshCategories();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            if (ex.getMessage().contains("Cannot delete or update a parent row")) {
+                ordersView.showWarning(
+                        "Delete Blocked",
+                        "This product cannot be deleted because it exists in past orders.\n" +
+                                "You can only deactivate it."
+                );
+            } else {
+                ex.printStackTrace();
+            }
         }
     }
 }

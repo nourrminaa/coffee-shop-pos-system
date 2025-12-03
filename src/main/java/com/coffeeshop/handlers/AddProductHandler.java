@@ -38,9 +38,8 @@ public class AddProductHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        OrdersView view = new OrdersView();
         if (st == null) {
-            view.showWarning("Error!", "Database not connected.");
+            ordersView.showWarning("Error!", "Database not connected.");
             return;
         }
         String name = nameField.getText().trim();
@@ -63,7 +62,7 @@ public class AddProductHandler implements EventHandler<ActionEvent> {
             // update table
             parent.clearForm();
             parent.loadProducts();
-            ordersView.refreshCategories();
+            this.ordersView.refreshCategories();
         } catch (NumberFormatException nfe) {
             System.err.println("ERROR: Price, Stock, and Min Stock must be numbers.");
         } catch (Exception e) {

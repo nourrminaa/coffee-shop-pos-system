@@ -41,9 +41,8 @@ public class UpdateProductHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        OrdersView view = new OrdersView();
         if (st == null) {
-            view.showWarning("Error!", "Database not connected.");
+            ordersView.showWarning("Error!", "Database not connected.");
             return;
         }
 
@@ -72,7 +71,7 @@ public class UpdateProductHandler implements EventHandler<ActionEvent> {
             st.executeUpdate(q);
             parent.clearForm();
             parent.loadProducts();
-            ordersView.refreshCategories();
+            this.ordersView.refreshCategories();
         } catch (NumberFormatException ex) {
             parent.setFormError("Invalid numeric values.");
         } catch (Exception ex) {
