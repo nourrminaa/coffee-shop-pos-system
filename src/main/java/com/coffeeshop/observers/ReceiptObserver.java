@@ -42,9 +42,9 @@ public class ReceiptObserver {
 
         int discount = 0;
         if (appliedDiscountPercent > 0) {
-            discount = (subtotal * appliedDiscountPercent) / 100;
+            discount = (subtotal * appliedDiscountPercent) / 100; // how much it will be deducted
             discountSummaryLabel.setText("Discount (" + appliedDiscountPercent + "%)"); // change the label to the percentage deducted
-            discountSummaryValue.setText("-" + discount + " LBP"); // change value
+            discountSummaryValue.setText("-" + discount + " LBP"); // changed value
         }
         subtotalValue.setText(subtotal + " LBP");
         totalValue.setText((subtotal - discount) + " LBP");

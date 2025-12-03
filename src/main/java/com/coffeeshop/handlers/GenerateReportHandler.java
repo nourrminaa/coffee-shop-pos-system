@@ -34,7 +34,7 @@ public class GenerateReportHandler implements EventHandler<ActionEvent> {
                 return;
             }
             // getting the DateRange (from/to) selected in the ComboBox
-            LocalDate now = LocalDate.now();
+            LocalDate now = LocalDate.now(); // yyyy/mm/dd without time
             // customized for date simplification
             DateRange range = new DateRange();
 
@@ -46,8 +46,9 @@ public class GenerateReportHandler implements EventHandler<ActionEvent> {
                     break;
 
                 case "This Week":
+                    // returns to the start of the week
                     LocalDate weekStart = now.minusDays(now.getDayOfWeek().getValue() - 1);
-                    LocalDate weekEnd = weekStart.plusDays(6);
+                    LocalDate weekEnd = weekStart.plusDays(6); // day 1 + 6 = > days of the week
 
                     range.fromDate = weekStart + " 00:00:00";
                     range.toDate = weekEnd + " 23:59:59";
@@ -55,7 +56,7 @@ public class GenerateReportHandler implements EventHandler<ActionEvent> {
                     break;
 
                 case "This Month":
-                    LocalDate first = now.withDayOfMonth(1);
+                    LocalDate first = now.withDayOfMonth(1); // set to the first day of the month
                     LocalDate last = now.withDayOfMonth(now.lengthOfMonth());
 
                     range.fromDate = first + " 00:00:00";
@@ -85,6 +86,7 @@ public class GenerateReportHandler implements EventHandler<ActionEvent> {
             // sales text in TextArea
             String sales = new String();
             try {
+                // get user data for the sales text
                 String q = "SELECT u.display_name, COUNT(o.id) AS c, SUM(o.total_lbp) AS s FROM orders o JOIN users u ON o.cashier_id = u.id WHERE DATE(o.created_at) >= '" + range.fromDate + "' AND DATE(o.created_at) <= '" + range.toDate + "' " + userSQL + " GROUP BY u.id ORDER BY s DESC";
 
                 ResultSet rs = st.executeQuery(q);

@@ -40,6 +40,7 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         try {
+            // only used to access the showWarning method in OrdersView
             OrdersView view = new OrdersView();
             if (st == null) {
                 view.showWarning("Error!", "Database not connected.");
@@ -61,7 +62,7 @@ public class LoginButtonHandler implements EventHandler<ActionEvent> {
             // by replacing ' with '': SELECT * FROM users WHERE username='  '' OR 1=1 --  '
             String safeUsername = username.replace("'", "''");
 
-            ResultSet rs = st.executeQuery("SELECT id, username, password_hash, display_name, role " + "FROM users WHERE username='" + safeUsername + "' AND password_hash='" + hashedPassword + "'");
+            ResultSet rs = st.executeQuery("SELECT id, username, password_hash, display_name, role FROM users WHERE username='" + safeUsername + "' AND password_hash='" + hashedPassword + "'");
 
             if (!rs.next()) {
                 loginView.setLoginError("Invalid username or password.");

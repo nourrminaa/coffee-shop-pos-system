@@ -79,7 +79,7 @@ public class CheckoutHandler implements EventHandler<ActionEvent> {
                 st.executeUpdate(updateStockSql);
             }
 
-            // keep the version before resetting ui
+            // keep the version before resetting ui for Receipt Generation Thread
             ArrayList<CartItem> receiptItems = new ArrayList<>(view.getCart());
             String savePath = System.getProperty("user.home") + "/Desktop/" + orderId + ".pdf";
             new ReceiptPDFThread(savePath, orderId, view.getCashierName(st, userId), receiptItems, total)

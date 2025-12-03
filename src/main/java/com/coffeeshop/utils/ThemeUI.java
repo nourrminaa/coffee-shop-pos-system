@@ -13,15 +13,14 @@ import java.security.MessageDigest;
 public class ThemeUI {
 
     // colors
-    public static final String BG_COLOR = "#F5F2EB";
-    public static final String BLACK_COLOR = "#171715";
-    public static final String TEXT_COLOR = "#111111";
-    public static final String GOLD_COLOR = "#D6B37A";
+    public static String BG_COLOR = "#F5F2EB";
+    public static String BLACK_COLOR = "#171715";
+    public static String TEXT_COLOR = "#111111";
+    public static String GOLD_COLOR = "#D6B37A";
 
     // fonts
-    private static final Font FONT_REGULAR = Font.loadFont(ThemeUI.class.getResourceAsStream("/fonts/Montserrat-Regular.ttf"), 18);
-
-    private static final Font FONT_BOLD = Font.loadFont(ThemeUI.class.getResourceAsStream("/fonts/Montserrat-Bold.ttf"), 28);
+    private static Font FONT_REGULAR = Font.loadFont(ThemeUI.class.getResourceAsStream("/fonts/Montserrat-Regular.ttf"), 18);
+    private static Font FONT_BOLD = Font.loadFont(ThemeUI.class.getResourceAsStream("/fonts/Montserrat-Bold.ttf"), 28);
 
     // component .setStyle String
     public static String buttonPrimary() {

@@ -90,7 +90,6 @@ public class ReportsView {
         userBox.getChildren().addAll(userLabel, usersComboBox);
         loadUsers(usersComboBox);
 
-        // PREVIEW AREA MUST BE DECLARED BEFORE HANDLERS
         TextArea reportPreviewArea = new TextArea();
         reportPreviewArea.setEditable(false);
         reportPreviewArea.setStyle("-fx-background-color: " + ThemeUI.BG_COLOR + ";" + "-fx-control-inner-background: " + ThemeUI.BG_COLOR + ";" + "-fx-text-fill: " + ThemeUI.TEXT_COLOR + ";" + "-fx-border-color: " + ThemeUI.BLACK_COLOR + ";" + "-fx-font-family: '" + ThemeUI.getFontRegular().getName() + "';" + "-fx-font-size: 12px;");

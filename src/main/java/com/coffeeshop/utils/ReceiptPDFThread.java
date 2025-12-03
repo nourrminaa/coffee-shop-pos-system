@@ -45,6 +45,7 @@ public class ReceiptPDFThread extends Thread {
             PDType0Font regular = PDType0Font.load(doc, new File("src/main/resources/fonts/Montserrat-Regular.ttf"));
             PDType0Font bold = PDType0Font.load(doc, new File("src/main/resources/fonts/Montserrat-Bold.ttf"));
 
+            // cs is like the pen of the page
             PDPageContentStream cs = new PDPageContentStream(doc, page);
 
             float left = 20;

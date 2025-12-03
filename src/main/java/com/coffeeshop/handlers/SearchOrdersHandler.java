@@ -25,7 +25,6 @@ public class SearchOrdersHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        OrdersView view = new OrdersView();
         if (st == null) {
             view.showWarning("Error!", "Database not connected.");
             return;

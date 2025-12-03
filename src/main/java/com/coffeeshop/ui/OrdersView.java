@@ -18,7 +18,6 @@ import com.coffeeshop.observers.ReceiptObserver;
 
 import com.coffeeshop.models.PromotionRow;
 
-
 import com.coffeeshop.utils.ThemeUI;
 import javafx.geometry.Insets;
 import javafx.geometry.Side;
@@ -167,7 +166,7 @@ public class OrdersView {
         HBox discountRow = new HBox(6);
 
         discountCombo = new ComboBox<>();
-        discountCombo.setPrefHeight(32);
+        discountCombo.setPrefHeight(28);
         discountCombo.setStyle(ThemeUI.textFieldStyle() + "-fx-font-size: 13px;");
         discountCombo.setPromptText("Select promotion");
         discountCombo.setMaxWidth(Double.MAX_VALUE);

@@ -3,7 +3,7 @@ package com.coffeeshop.ui;
 import com.coffeeshop.handlers.AddProductHandler;
 import com.coffeeshop.handlers.LogoutButtonHandler;
 import com.coffeeshop.handlers.UpdateProductHandler;
-import com.coffeeshop.handlers.DeleteProductHandler; // FIXED
+import com.coffeeshop.handlers.DeleteProductHandler;
 import com.coffeeshop.models.ProductRow;
 import com.coffeeshop.utils.ThemeUI;
 import javafx.geometry.Insets;
