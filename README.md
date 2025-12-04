@@ -162,8 +162,16 @@ Loaded from `.env`:
 ## Part 9 - Security
 
 ### SQL Injection Prevention
-- **Prepared statements** across all DB operations  
-- No direct string concatenation for inputs  
+This project currently uses **string sanitization** to reduce SQL injection risks by escaping single quotes in user input:
+
+```java
+String safeInput = input.replace("'", "''");
+```
+
+Doubling single quotes prevents attackers from prematurely closing string literals in SQL queries and helps neutralize basic injection attempts.
+
+This method improves safety for simple cases, but it is **not equivalent to prepared statements**.  
+Prepared statements remain the recommended long-term solution for robust SQL injection protection. 
 
 ### Password Security
 - Passwords hashed using **SHA-256**  
