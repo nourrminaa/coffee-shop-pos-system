@@ -2,6 +2,8 @@
 
 This repository contains a complete **Point-of-Sale (POS)** system implemented in Java using **JavaFX**, **MySQL**, modular handlers, and clean OOP design patterns.
 
+![Demo](assets/demo.gif)
+
 ## Summary
 **Project:** Coffee Shop POS  
 **Contents:** Role-based authentication, inventory & promotions management, cart & checkout workflow, receipt generation, PDF exporting, and sales reporting.  
