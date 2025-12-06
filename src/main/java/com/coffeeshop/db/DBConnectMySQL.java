@@ -11,7 +11,7 @@ public class DBConnectMySQL {
 //        because IntelliJ runs JavaFX apps from weird locations,
 //        dotenv often cannot find .env unless you tell it exactly where it is
 //        this line is like saying: “load the .env file from EXACTLY this directory.”
-        Dotenv dotenv = Dotenv.configure().directory("/Users/user/Desktop/github-oopii-project").load();
+        Dotenv dotenv = Dotenv.configure().directory("/Users/user/Desktop/oopii-project").load();
 
         String host = dotenv.get("DB_HOST");
         String port = dotenv.get("DB_PORT");
